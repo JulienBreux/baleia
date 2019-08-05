@@ -27,5 +27,4 @@ ARG {{ $argument }}
 LABEL {{ $key }}="{{ $val }}"
 {{- end }}
 {{- end }}
-
 `
