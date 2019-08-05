@@ -23,15 +23,16 @@ builds:
     ldflags:
       - -s -w -X github.com/JulienBreux/baleia/cmd.version={{.Version}} -X github.com/JulienBreux/baleia/cmd.commit={{.Commit}} -X github.com/JulienBreux/baleia/cmd.date={{.Date}}
 archive:
-  replacements:
-    darwin: Darwin
-    linux: Linux
-    windows: Windows
-    bit: Arm
-    bitv6: Arm6
-    bitv7: Arm7
-    386: i386
-    amd64: x86_64
+  - id: baleia
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      bit: Arm
+      bitv6: Arm6
+      bitv7: Arm7
+      386: i386
+      amd64: x86_64
 checksum:
   name_template: "checksums.txt"
 snapshot:
@@ -45,15 +46,16 @@ changelog:
 
 # Homebrew
 brew:
-  name: baleia
-  github:
-    owner: JulienBreux
-    name: baleia-homebrew-tap
-  commit_author:
-    name: JulienBreux
-    email: julien.breux@gmail.com
-  folder: Formula
-  homepage: https://baleias.io
-  description: Baleia is a CLI to manage Docker images repositories by templating
-  test: |
-    system "baleia version"
+  -
+    name: baleia
+    github:
+      owner: JulienBreux
+      name: baleia-homebrew-tap
+    commit_author:
+      name: Julien Breux
+      email: julien.breux@gmail.com
+    folder: Formula
+    homepage: https://baleias.io
+    description: Baleia is a CLI to manage Docker images repositories by templating
+    test: |
+      system "baleia version"
