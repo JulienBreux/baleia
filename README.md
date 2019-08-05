@@ -13,7 +13,7 @@ The project is based on three philosophies *KISS*, *DRY* and *YAGNI*.
 
 ## Installation
 
-K9s is available on Linux, OSX and Windows platforms.
+Baleia is available on Linux, OSX and Windows platforms.
 
 * Binaries for Mac OS, Linux and Windows are available as tarballs in the [release](https://github.com/JulienBreux/baleia/releases) page.
 
