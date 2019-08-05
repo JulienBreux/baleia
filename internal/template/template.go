@@ -111,20 +111,28 @@ func (t *template) Print(w io.Writer, diff bool) {
 	for stateName, state := range files.States {
 		if first {
 			first = false
-		} else {
+		}
+
+		if !first {
 			fmt.Fprintln(w, "")
 		}
 		fmt.Fprintln(w, aurora.Yellow(fmt.Sprintf("%s %d file(s)", stateName, t.files.Len(state))))
-		if t.files.Len(state) > 0 {
-			for _, f := range t.files.List(state) {
-				fmt.Fprintln(w, aurora.White(fmt.Sprintf("▹ %s", f.Path())))
-				if diff && state == state {
-					d, _ := f.Diff()
-					fmt.Fprint(w, aurora.Gray(12, d))
-				}
-			}
-		} else {
-			fmt.Fprintln(w, aurora.Green("▹ No files"))
-		}
+		t.printFile(w, state, diff)
 	}
+}
+
+// printFile prints a file line
+func (t *template) printFile(w io.Writer, state files.State, diff bool) {
+	if t.files.Len(state) > 0 {
+		for _, f := range t.files.List(state) {
+			fmt.Fprintln(w, aurora.White(fmt.Sprintf("▹ %s", f.Path())))
+			if diff && state == files.StateChanged {
+				d, _ := f.Diff()
+				fmt.Fprint(w, aurora.Gray(12, d))
+			}
+		}
+		return
+	}
+
+	fmt.Fprintln(w, aurora.Green("▹ No files"))
 }
