@@ -123,7 +123,10 @@ func (t *template) Print(w io.Writer, diff bool) {
 	// Changes print
 	first := true
 	for stateName, state := range files.States {
-		t.printFile(w, state, stateName, first, diff)
+		if !first {
+			fmt.Fprintln(w, "")
+		}
+		t.printFile(w, state, stateName, diff)
 		if first {
 			first = false
 		}
@@ -131,13 +134,11 @@ func (t *template) Print(w io.Writer, diff bool) {
 }
 
 // printFile prints a file line
-func (t *template) printFile(w io.Writer, state files.State, stateName string, first, diff bool) {
+func (t *template) printFile(w io.Writer, state files.State, stateName string, diff bool) {
 	if t.files.Len(state) == 0 {
 		return
 	}
-	if !first {
-		fmt.Fprintln(w, "")
-	}
+
 	fmt.Fprintln(w, aurora.Yellow(fmt.Sprintf("%s file(s): %d", stateName, t.files.Len(state))))
 	for _, f := range t.files.List(state) {
 		fmt.Fprintln(w, aurora.White(fmt.Sprintf("▹ %s", f.Path())))
