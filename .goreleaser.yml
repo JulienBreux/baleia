@@ -55,7 +55,7 @@ brew:
       name: Julien Breux
       email: julien.breux@gmail.com
     folder: Formula
-    homepage: https://baleias.io
+    homepage: https://julienbreux.github.io/baleia/
     description: Baleia is a CLI to manage Docker images repositories by templating
     test: |
       system "baleia version"
