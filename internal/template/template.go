@@ -63,9 +63,8 @@ func (t *template) getFileState(img config.Image, c []byte) files.State {
 	if file.Exists(img.GetOutput()) {
 		if d, _ := file.Compare(img.GetOutput(), c); d {
 			return files.StateChanged
-		} else {
-			return files.StateUnchanged
 		}
+		return files.StateUnchanged
 	}
 
 	return files.StateCreated
