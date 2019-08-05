@@ -18,9 +18,13 @@ var versionCmd = &cobra.Command{
 
 // versionRun represents the run command
 func versionRun(cmd *cobra.Command, args []string) {
-	fmt.Print(aurora.Cyan("Version:  %s"), aurora.White(version))
-	fmt.Print(aurora.Cyan("Commit:   %s"), aurora.White(commit))
-	fmt.Print(aurora.Cyan("Date:     %s"), aurora.White(date))
+	fmt.Println(aurora.Cyan("Version:  "), aurora.White(version))
+	fmt.Println(aurora.Cyan("Commit:   "), aurora.White(commit))
+	fmt.Println(aurora.Cyan("Date:     "), aurora.White(date))
 
 	os.Exit(0)
+}
+
+func init() {
+	rootCmd.AddCommand(versionCmd)
 }
