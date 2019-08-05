@@ -22,7 +22,7 @@ builds:
       - 7
     ldflags:
       - -s -w -X github.com/JulienBreux/baleia/cmd.version={{.Version}} -X github.com/JulienBreux/baleia/cmd.commit={{.Commit}} -X github.com/JulienBreux/baleia/cmd.date={{.Date}}
-archive:
+archives:
   - id: baleia
     replacements:
       darwin: Darwin
@@ -45,7 +45,7 @@ changelog:
       - "^test:"
 
 # Homebrew
-brew:
+brews:
   -
     name: baleia
     github:
@@ -56,6 +56,6 @@ brew:
       email: julien.breux@gmail.com
     folder: Formula
     homepage: https://julienbreux.github.io/baleia/
-    description: Baleia is a CLI to manage Docker images repositories by templating
+    description: Baleia is a template engine used to manage Docker images templates repositories.
     test: |
       system "baleia version"
