@@ -1,0 +1,4 @@
+.env
+baleia
+Dockerfile.tmpl
+.baleia.yaml

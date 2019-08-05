@@ -1,0 +1,59 @@
+project_name: baleia
+before:
+  hooks:
+    - go mod download
+    - go generate ./...
+release:
+  prerelease: true
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 6
+      - 7
+    ldflags:
+      - -s -w -X github.com/julienbreux/baleia/cmd.version={{.Version}} -X github.com/julienbreux/baleia/cmd.commit={{.Commit}} -X github.com/julienbreux/baleia/cmd.date={{.Date}}
+archive:
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    bit: Arm
+    bitv6: Arm6
+    bitv7: Arm7
+    386: i386
+    amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+# Homebrew
+brew:
+  name: baleia
+  github:
+    owner: julienbreux
+    name: baleia-homebrew-tap
+  commit_author:
+    name: julienbreux
+    email: julien.breux@gmail.com
+  folder: Formula
+  homepage: https://baleias.io
+  description: Baleia is a CLI to manage Docker images repositories by templating
+  test: |
+    system "baleia version"
