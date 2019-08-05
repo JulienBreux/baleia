@@ -55,3 +55,8 @@ func printError(w io.Writer, str string, err error) {
 	}
 	os.Exit(1)
 }
+
+// printSuccess prints a success :-)
+func printSuccess(w io.Writer, str string) {
+	fmt.Fprintf(w, "✅ %s\n", aurora.Green(str))
+}
