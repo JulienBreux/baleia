@@ -139,15 +139,15 @@ func (t *template) Print(w io.Writer, diff bool) {
 // printFile prints a file line
 func (t *template) printFile(w io.Writer, state files.State, diff bool) {
 	if t.files.Len(state) > 0 {
-		for _, f := range t.files.List(state) {
-			fmt.Fprintln(w, aurora.White(fmt.Sprintf("▹ %s", f.Path())))
-			if diff && state == files.StateChanged {
-				d, _ := f.Diff()
-				fmt.Fprint(w, aurora.Gray(12, d))
-			}
-		}
+		fmt.Fprintln(w, aurora.Green("▹ No files"))
 		return
 	}
 
-	fmt.Fprintln(w, aurora.Green("▹ No files"))
+	for _, f := range t.files.List(state) {
+		fmt.Fprintln(w, aurora.White(fmt.Sprintf("▹ %s", f.Path())))
+		if diff && state == files.StateChanged {
+			d, _ := f.Diff()
+			fmt.Fprint(w, aurora.Gray(12, d))
+		}
+	}
 }
