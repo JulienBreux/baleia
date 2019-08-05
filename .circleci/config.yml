@@ -44,10 +44,10 @@ workflows:
     jobs:
       - build
   release:
-      jobs:
-        - release:
-            filters:
-              branches:
-                ignore: /.*/
-              tags:
-                only: /v[0-9]+(\.[0-9]+)*(-.*)*/
+    jobs:
+      - release:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*(-.*)*/
