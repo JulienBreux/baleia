@@ -2,12 +2,16 @@ package cmd
 
 import (
 	"fmt"
+	"io"
 	"os"
 
+	"github.com/logrusorgru/aurora"
 	"github.com/spf13/cobra"
 )
 
 var (
+	debug = false
+
 	version = "dev"
 	commit  = "dev"
 	date    = "n/a"
@@ -29,8 +33,18 @@ It's very useful to generate a big repository of images.`,
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
+	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Debug mode")
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+}
+
+// printError prints an error O_o
+func printError(w io.Writer, str string, err error) {
+	fmt.Fprintln(w, aurora.Red(str))
+	if err != nil && debug {
+		fmt.Fprintln(w, aurora.Red(fmt.Sprintf(" ▹ %+v", err)))
+	}
+	os.Exit(1)
 }
