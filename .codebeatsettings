@@ -1,5 +1,6 @@
 {
   "GOLANG": {
-    "TOO_MANY_IVARS": [14, 16, 18, 20]
+    "TOO_MANY_IVARS": [14, 16, 18, 20],
+    "ABC": [20, 25, 50, 70]
   }
 }
