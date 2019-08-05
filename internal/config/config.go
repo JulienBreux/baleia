@@ -52,52 +52,17 @@ func (c config) GetImages() (imgs []Image) {
 // computeImageValues computes image values
 // FIXME: Before major release, return errors
 func (c config) computeImageValues(img schemaImage) Image {
-	var v string
-
-	// Field: Maintainers
-	if len(img.Maintainers) == 0 {
-		img.Maintainers = c.schema.Maintainers
-	}
-
-	// Field: Labels
-	if len(img.Labels) == 0 {
-		img.Labels = c.schema.Labels
-	}
-
-	// Field: Arguments
-	if len(img.Arguments) == 0 {
-		img.Arguments = c.schema.Arguments
-	}
-
 	// Variables
 	vars := img.SetDefaultVars(c.schema)
 
-	// Field: Name
-	if img.Name == "" {
-		img.Name = c.schema.Name
-	}
-	v, _ = c.computeValue(vars, img.Name)
-	img.Name = v
-
-	// Field: Base image
-	if img.BaseImage == "" {
-		img.BaseImage = c.schema.BaseImage
-	}
-	v, _ = c.computeValue(vars, img.BaseImage)
-	img.BaseImage = v
-
-	// Field: Image tag
-	if img.ImageTag == "" {
-		img.ImageTag = c.schema.ImageTag
-	}
-	v, _ = c.computeValue(vars, img.ImageTag)
-	img.ImageTag = v
-	// Field: Output
-	if img.Output == "" {
-		img.Output = c.schema.Output
-	}
-	v, _ = c.computeValue(vars, img.Output)
-	img.Output = v
+	// Default fields
+	img.Maintainers = c.defaultStringSlice(img.Maintainers, c.schema.Maintainers)
+	img.Labels = c.defaultStringMap(img.Labels, c.schema.Labels)
+	img.Arguments = c.defaultStringSlice(img.Arguments, c.schema.Arguments)
+	img.Name = c.defaultStringWithVars(img.Name, c.schema.Name, vars)
+	img.BaseImage = c.defaultStringWithVars(img.BaseImage, c.schema.BaseImage, vars)
+	img.ImageTag = c.defaultStringWithVars(img.ImageTag, c.schema.ImageTag, vars)
+	img.Output = c.defaultStringWithVars(img.Output, c.schema.Output, vars)
 
 	return img
 }
@@ -113,4 +78,36 @@ func (c config) computeValue(vars map[string]interface{}, value string) (string,
 		return "", err
 	}
 	return buf.String(), nil
+}
+
+// defaultStringWithVars returns a string or default
+func (c config) defaultStringWithVars(i, d string, vars map[string]interface{}) string {
+	if i == "" {
+		i = d
+	}
+
+	v, err := c.computeValue(vars, i)
+	if err != nil {
+		return i
+	}
+
+	return v
+}
+
+// defaultStringSlice returns a string slice or default
+func (c config) defaultStringSlice(i, d []string) []string {
+	if len(i) == 0 {
+		return d
+	}
+
+	return i
+}
+
+// defaultStringMap returns a string map or default
+func (c config) defaultStringMap(i, d map[string]string) map[string]string {
+	if len(i) == 0 {
+		return d
+	}
+
+	return i
 }
