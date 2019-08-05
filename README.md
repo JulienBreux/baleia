@@ -9,12 +9,12 @@ The project is based on three philosophies *KISS*, *DRY* and *YAGNI*.
 
 K9s is available on Linux, OSX and Windows platforms.
 
-* Binaries for Mac OS, Linux and Windows are available as tarballs in the [release](https://github.com/julienbreux/baleia/releases) page.
+* Binaries for Mac OS, Linux and Windows are available as tarballs in the [release](https://github.com/JulienBreux/baleia/releases) page.
 
 * Via Homebrew (Mac OS) or LinuxBrew (Linux)
 
    ```shell
-   brew tap julienbreux/baleia
+   brew tap JulienBreux/baleia
    brew install baleia
    ```
 
@@ -26,7 +26,7 @@ K9s is available on Linux, OSX and Windows platforms.
 
       ```text
       replace (
-        github.com/julienbreux/baleia => CLONED_GIT_REPOSITORY
+        github.com/JulienBreux/baleia => CLONED_GIT_REPOSITORY
       )
       ```
 

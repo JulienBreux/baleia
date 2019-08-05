@@ -21,7 +21,7 @@ builds:
       - 6
       - 7
     ldflags:
-      - -s -w -X github.com/julienbreux/baleia/cmd.version={{.Version}} -X github.com/julienbreux/baleia/cmd.commit={{.Commit}} -X github.com/julienbreux/baleia/cmd.date={{.Date}}
+      - -s -w -X github.com/JulienBreux/baleia/cmd.version={{.Version}} -X github.com/JulienBreux/baleia/cmd.commit={{.Commit}} -X github.com/JulienBreux/baleia/cmd.date={{.Date}}
 archive:
   replacements:
     darwin: Darwin
@@ -47,10 +47,10 @@ changelog:
 brew:
   name: baleia
   github:
-    owner: julienbreux
+    owner: JulienBreux
     name: baleia-homebrew-tap
   commit_author:
-    name: julienbreux
+    name: JulienBreux
     email: julien.breux@gmail.com
   folder: Formula
   homepage: https://baleias.io
