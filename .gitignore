@@ -2,3 +2,4 @@
 baleia
 Dockerfile.tmpl
 .baleia.yaml
+go/
