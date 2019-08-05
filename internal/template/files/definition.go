@@ -19,7 +19,7 @@ type State int
 
 // Files represents the interface of files manager
 type Files interface {
-	Add(filepath string, s State, c []byte)
+	Add(f File)
 	List(s State) []File
 	Len(s State) int
 	LenAll() int
@@ -30,4 +30,5 @@ type File interface {
 	Path() string
 	Diff() (string, error)
 	Content() []byte
+	State() State
 }

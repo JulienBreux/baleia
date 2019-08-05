@@ -11,6 +11,15 @@ type file struct {
 	c    []byte
 }
 
+// NewFile creates a new file instance
+func NewFile(path string, state State, content []byte) File {
+	return &file{
+		path: path,
+		s:    state,
+		c:    content,
+	}
+}
+
 // Path returns the file's path
 func (f *file) Path() string {
 	return f.path
@@ -24,4 +33,9 @@ func (f *file) Diff() (string, error) {
 // Content returns the file's content
 func (f *file) Content() []byte {
 	return f.c
+}
+
+// State returns the files's state
+func (f *file) State() State {
+	return f.s
 }

@@ -12,13 +12,10 @@ func New() Files {
 	}
 }
 
-// Add add a file to a state collection
-func (f *files) Add(path string, s State, c []byte) {
-	f.files[s] = append(f.files[s], &file{
-		path: path,
-		s:    s,
-		c:    c,
-	})
+// Add adds a file to a state collection
+func (f *files) Add(file File) {
+	s := file.State()
+	f.files[s] = append(f.files[s], file)
 }
 
 // List returns the list of files of a state collection

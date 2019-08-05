@@ -46,23 +46,29 @@ func (t *template) Parse() (err error) {
 			return err
 		}
 
-		// Define state
-		// TODO: Move to own function
-		var s files.State
-		if file.Exists(img.GetOutput()) {
-			if d, _ := file.Compare(img.GetOutput(), c); d {
-				s = files.StateChanged
-			} else {
-				s = files.StateUnchanged
-			}
-		} else {
-			s = files.StateCreated
-		}
-
-		t.files.Add(img.GetOutput(), s, c)
+		t.files.Add(
+			files.NewFile(
+				img.GetOutput(),
+				t.getFileState(img, c),
+				c,
+			),
+		)
 	}
 
 	return
+}
+
+// getFileState returns the file state
+func (t *template) getFileState(img config.Image, c []byte) files.State {
+	if file.Exists(img.GetOutput()) {
+		if d, _ := file.Compare(img.GetOutput(), c); d {
+			return files.StateChanged
+		} else {
+			return files.StateUnchanged
+		}
+	}
+
+	return files.StateCreated
 }
 
 // computeContent computes file content
