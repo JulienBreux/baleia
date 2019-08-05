@@ -39,3 +39,22 @@ func (i schemaImage) GetOutput() string {
 func (i schemaImage) GetArguments() []string {
 	return i.Arguments
 }
+
+// SetDefaultVars set the default variables
+func (i schemaImage) SetDefaultVars(s *schema) (vars map[string]interface{}) {
+	if s == nil {
+		return
+	}
+
+	// vars := make(map[string]interface{})
+	for key, val := range s.Vars {
+		if _, ok := i.Vars[key]; !ok {
+			i.Vars[key] = val
+		}
+	}
+	vars["name"] = s.Name
+	for key, val := range i.Vars {
+		vars[key] = val
+	}
+	return
+}

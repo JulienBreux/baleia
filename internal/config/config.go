@@ -54,22 +54,23 @@ func (c config) GetImages() (imgs []Image) {
 func (c config) computeImageValues(img schemaImage) Image {
 	var v string
 
-	// Variables
-	vars := make(map[string]interface{})
-	for key, val := range c.schema.Vars {
-		if _, ok := img.Vars[key]; !ok {
-			img.Vars[key] = val
-		}
-	}
-	vars["name"] = c.schema.Name
-	for key, val := range img.Vars {
-		vars[key] = val
-	}
-
 	// Field: Maintainers
 	if len(img.Maintainers) == 0 {
 		img.Maintainers = c.schema.Maintainers
 	}
+
+	// Field: Labels
+	if len(img.Labels) == 0 {
+		img.Labels = c.schema.Labels
+	}
+
+	// Field: Arguments
+	if len(img.Arguments) == 0 {
+		img.Arguments = c.schema.Arguments
+	}
+
+	// Variables
+	vars := img.SetDefaultVars(c.schema)
 
 	// Field: Name
 	if img.Name == "" {
@@ -77,11 +78,6 @@ func (c config) computeImageValues(img schemaImage) Image {
 	}
 	v, _ = c.computeValue(vars, img.Name)
 	img.Name = v
-
-	// Field: Labels
-	if len(img.Labels) == 0 {
-		img.Labels = c.schema.Labels
-	}
 
 	// Field: Base image
 	if img.BaseImage == "" {
@@ -102,11 +98,6 @@ func (c config) computeImageValues(img schemaImage) Image {
 	}
 	v, _ = c.computeValue(vars, img.Output)
 	img.Output = v
-
-	// Field: Arguments
-	if len(img.Arguments) == 0 {
-		img.Arguments = c.schema.Arguments
-	}
 
 	return img
 }
