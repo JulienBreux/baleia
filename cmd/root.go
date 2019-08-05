@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io"
 	"os"
 
 	"github.com/logrusorgru/aurora"
@@ -48,15 +47,15 @@ func Execute() {
 }
 
 // printError prints an error O_o
-func printError(w io.Writer, str string, err error) {
-	fmt.Fprintln(w, aurora.Red(str))
+func printError(str string, err error) {
+	fmt.Println(aurora.Red(str))
 	if err != nil && debug {
-		fmt.Fprintln(w, aurora.Red(fmt.Sprintf(" ▹ %+v", err)))
+		fmt.Println(aurora.Red(fmt.Sprintf(" ▹ %+v", err)))
 	}
 	os.Exit(1)
 }
 
 // printSuccess prints a success :-)
-func printSuccess(w io.Writer, str string) {
-	fmt.Fprintf(w, "✅ %s\n", aurora.Green(str))
+func printSuccess(str string) {
+	fmt.Printf("✅ %s\n", aurora.Green(str))
 }

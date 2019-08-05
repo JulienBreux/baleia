@@ -1,9 +1,5 @@
 package template
 
-import (
-	"io"
-)
-
 // Template represents the interface template
 type Template interface {
 	// Parse parses files
@@ -13,5 +9,5 @@ type Template interface {
 	Write() (err error)
 
 	// Print prints files changes
-	Print(w io.Writer, diff bool)
+	Print(diff bool)
 }

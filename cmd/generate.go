@@ -28,27 +28,27 @@ It's recommended to user the --dry option to display your changes.`,
 func generateRun(cmd *cobra.Command, args []string) {
 	c, err := config.New(configFile)
 	if err != nil {
-		printError(os.Stderr, fmt.Sprintf("Unable to read config file '%s'", configFile), nil)
+		printError(fmt.Sprintf("Unable to read config file '%s'", configFile), nil)
 	}
 
 	// Open template
 	t, err := template.New(c)
 	if err != nil {
-		printError(os.Stderr, err.Error(), nil)
+		printError(err.Error(), nil)
 	}
 
 	// Parse templates
 	if err := t.Parse(); err != nil {
-		printError(os.Stderr, fmt.Sprintf("Unable to parse template '%s'", c.GetTemplate()), err)
+		printError(fmt.Sprintf("Unable to parse template '%s'", c.GetTemplate()), err)
 	}
 
 	// Print output
-	t.Print(os.Stdout, diff)
+	t.Print(diff)
 
 	// Write templates changed
 	if !dry {
 		if err = t.Write(); err != nil {
-			printError(os.Stdout, "Unable to write files", nil)
+			printError("Unable to write files", nil)
 		}
 	}
 

@@ -40,14 +40,14 @@ func initRun(cmd *cobra.Command, args []string) {
 func generateFile(i bool, f string, c []byte) {
 	if i {
 		if filepkg.Exists(f) {
-			printError(os.Stderr, fmt.Sprintf("File '%s' already exists", f), nil)
+			printError(fmt.Sprintf("File '%s' already exists", f), nil)
 		}
 
 		if _, err := filepkg.Write(f, c); err != nil {
-			printError(os.Stderr, fmt.Sprintf("Unable to create '%s' file", f), err)
+			printError(fmt.Sprintf("Unable to create '%s' file", f), err)
 		}
 
-		printSuccess(os.Stdout, fmt.Sprintf("File '%s' successfully created", f))
+		printSuccess(fmt.Sprintf("File '%s' successfully created", f))
 	}
 }
 

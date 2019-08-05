@@ -3,7 +3,6 @@ package template
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	gotemplate "text/template"
 
@@ -119,14 +118,14 @@ func (t *template) writeFilesByState(s files.State) error {
 }
 
 // Print prints files
-func (t *template) Print(w io.Writer, diff bool) {
+func (t *template) Print(diff bool) {
 	// Changes print
 	first := true
 	for stateName, state := range files.States {
 		if !first {
-			fmt.Fprintln(w, "")
+			fmt.Println("")
 		}
-		t.printFile(w, state, stateName, diff)
+		t.printFile(state, stateName, diff)
 		if first {
 			first = false
 		}
@@ -134,17 +133,17 @@ func (t *template) Print(w io.Writer, diff bool) {
 }
 
 // printFile prints a file line
-func (t *template) printFile(w io.Writer, state files.State, stateName string, diff bool) {
+func (t *template) printFile(state files.State, stateName string, diff bool) {
 	if t.files.Len(state) == 0 {
 		return
 	}
 
-	fmt.Fprintln(w, aurora.Yellow(fmt.Sprintf("%s file(s): %d", stateName, t.files.Len(state))))
+	fmt.Println(aurora.Yellow(fmt.Sprintf("%s file(s): %d", stateName, t.files.Len(state))))
 	for _, f := range t.files.List(state) {
-		fmt.Fprintln(w, aurora.White(fmt.Sprintf("▹ %s", f.Path())))
+		fmt.Println(aurora.White(fmt.Sprintf("▹ %s", f.Path())))
 		if diff && state == files.StateChanged {
 			d, _ := f.Diff()
-			fmt.Fprint(w, aurora.Gray(12, d))
+			fmt.Print(aurora.Gray(12, d))
 		}
 	}
 }
