@@ -9,8 +9,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	defaultConfigFile = ".baleia.yaml"
+)
+
 var (
-	debug = false
+	debug      = false
+	configFile = defaultConfigFile
 
 	version = "dev"
 	commit  = "dev"
@@ -34,6 +39,8 @@ It's very useful to generate a big repository of images.`,
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Debug mode")
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config-file", "c", defaultConfigFile, "Configuration file")
+
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
