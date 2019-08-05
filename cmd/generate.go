@@ -75,8 +75,8 @@ func printError(w io.Writer, str string, err error) {
 func init() {
 	rootCmd.AddCommand(generateCmd)
 
-	generateCmd.Flags().StringVar(&file, "f", defaultFile, "File used to work")
-	generateCmd.Flags().BoolVar(&dry, "y", false, "Dry mode to display changes only")
-	generateCmd.Flags().BoolVar(&diff, "i", false, "Display diff")
-	generateCmd.Flags().BoolVar(&debug, "d", false, "Debug mode")
+	generateCmd.Flags().StringVarP(&file, "file", "f", defaultFile, "File used to work")
+	generateCmd.Flags().BoolVarP(&dry, "dry", "y", false, "Dry mode to display changes only")
+	generateCmd.Flags().BoolVarP(&diff, "diff", "i", false, "Display diff")
+	generateCmd.Flags().BoolVarP(&debug, "debug", "d", false, "Debug mode")
 }
