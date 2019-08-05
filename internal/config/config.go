@@ -9,6 +9,28 @@ const (
 	defaultTemplate = "Dockerfile.tmpl"
 )
 
+// config represents the internal configuration
+type config struct {
+	schema *schema
+}
+
+// schema represents the configuration schema
+type schema struct {
+	Version  string        `yaml:"version,omitempty"`
+	Template string        `yaml:"template,omitempty"`
+	Images   []schemaImage `yaml:"images"`
+
+	// copy: schemaImage
+	Vars        map[string]string `yaml:"vars,omitempty"`
+	Maintainers []string          `yaml:"maintainers,omitempty"`
+	Name        string            `yaml:"name"`
+	Labels      map[string]string `yaml:"labels,omitempty"`
+	BaseImage   string            `yaml:"baseImage,omitempty"`
+	ImageTag    string            `yaml:"imageTag,omitempty"`
+	Output      string            `yaml:"output,omitempty"`
+	Arguments   []string          `yaml:"arguments,omitempty"`
+}
+
 // New creates a config instance
 func New(f string) (Config, error) {
 	s, err := fileToSchema(f)
