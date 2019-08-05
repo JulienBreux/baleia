@@ -13,8 +13,8 @@ jobs:
           name: Create test results directory
           command: mkdir -p $TEST_RESULTS
       - restore_cache:
-        keys:
-          - go-mod-v0-{{ checksum "go.sum" }}
+          keys:
+            - go-mod-v0-{{ checksum "go.sum" }}
       - run:
           name: Run unit tests
           command: |
