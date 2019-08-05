@@ -50,7 +50,7 @@ brews:
     name: baleia
     github:
       owner: JulienBreux
-      name: baleia-homebrew-tap
+      name: homebrew-baleia
     commit_author:
       name: Julien Breux
       email: julien.breux@gmail.com
