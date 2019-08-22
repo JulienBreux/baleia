@@ -3,8 +3,8 @@ package template
 import (
 	"bytes"
 	"fmt"
-	gotemplate "html/template"
 	"io/ioutil"
+	gotemplate "text/template"
 
 	"github.com/Masterminds/sprig"
 	"github.com/logrusorgru/aurora"
@@ -86,7 +86,7 @@ func (t *template) computeContent(img config.Image) ([]byte, error) {
 
 	outputTpl, err := gotemplate.
 		New("output").
-		Funcs(sprig.FuncMap()).
+		Funcs(sprig.GenericFuncMap()).
 		Parse(string(t.template))
 	if err != nil {
 		return []byte{}, err
