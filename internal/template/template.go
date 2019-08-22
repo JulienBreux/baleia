@@ -3,13 +3,15 @@ package template
 import (
 	"bytes"
 	"fmt"
+	gotemplate "html/template"
 	"io/ioutil"
-	gotemplate "text/template"
+
+	"github.com/Masterminds/sprig"
+	"github.com/logrusorgru/aurora"
 
 	"github.com/julienbreux/baleia/internal/config"
 	"github.com/julienbreux/baleia/internal/template/files"
 	"github.com/julienbreux/baleia/pkg/file"
-	"github.com/logrusorgru/aurora"
 )
 
 // template represents the internal template
@@ -82,7 +84,10 @@ func (t *template) computeContent(img config.Image) ([]byte, error) {
 	vars["arguments"] = img.GetArguments()
 	vars["vars"] = img.GetVars()
 
-	outputTpl, err := gotemplate.New("output").Parse(string(t.template))
+	outputTpl, err := gotemplate.
+		New("output").
+		Funcs(sprig.FuncMap()).
+		Parse(string(t.template))
 	if err != nil {
 		return []byte{}, err
 	}
