@@ -9,11 +9,6 @@ const (
 	StateUnchanged
 )
 
-var (
-	// States represents the list of states
-	States = map[string]State{"Created": StateCreated, "Changed": StateChanged, "Unchanged": StateUnchanged}
-)
-
 // State represents a file type
 type State int
 
