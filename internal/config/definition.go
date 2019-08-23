@@ -3,7 +3,7 @@ package config
 // Config represents a configuration interface
 type Config interface {
 	GetVersion() string
-	GetTemplate() string
+	GetTemplates() map[string]string
 	LenImages() int
 	GetImages() []Image
 }
@@ -11,6 +11,7 @@ type Config interface {
 // Image represents a configuration image interface
 type Image interface {
 	GetVars() map[string]string
+	GetTemplate() string
 	GetMaintainers() []string
 	GetName() string
 	GetLabels() map[string]string

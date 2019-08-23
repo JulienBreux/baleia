@@ -3,6 +3,7 @@ package config
 // schemaImage represents the configuration schema images
 type schemaImage struct {
 	Vars        map[string]string `yaml:"vars,omitempty"`
+	Template    string            `yaml:"template,omitempty"`
 	Maintainers []string          `yaml:"maintainers,omitempty"`
 	Name        string            `yaml:"name"`
 	Labels      map[string]string `yaml:"labels,omitempty"`
@@ -10,6 +11,11 @@ type schemaImage struct {
 	ImageTag    string            `yaml:"imageTag,omitempty"`
 	Output      string            `yaml:"output,omitempty"`
 	Arguments   []string          `yaml:"arguments,omitempty"`
+}
+
+// GetTemplate returns template
+func (i schemaImage) GetTemplate() string {
+	return i.Template
 }
 
 // GetMaintainers returns maintainers

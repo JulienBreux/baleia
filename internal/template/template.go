@@ -16,27 +16,53 @@ import (
 
 // template represents the internal template
 type template struct {
-	template []byte
-	files    files.Files
-	config   config.Config
+	config    config.Config
+	templates map[string][]byte
+	files     files.Files
 }
 
 // New creates a new template instance
 func New(c config.Config) (Template, error) {
-	if !file.Exists(c.GetTemplate()) {
-		return nil, fmt.Errorf("Unable to open the template file '%s'", c.GetTemplate())
+	templates := make(map[string][]byte)
+
+	t := &template{
+		config:    c,
+		templates: templates,
+		files:     files.New(),
 	}
 
-	cts, err := ioutil.ReadFile(c.GetTemplate())
+	if err := t.loadTemplates(); err != nil {
+		return nil, err
+	}
+
+	return t, nil
+}
+
+// loadTemplates loads the templates content
+func (t *template) loadTemplates() error {
+	for name, tpl := range t.config.GetTemplates() {
+		cts, err := t.loadTemplateContent(tpl)
+		if err != nil {
+			return err
+		}
+		t.templates[name] = cts
+	}
+
+	return nil
+}
+
+// loadTemplateContent loads the template content
+func (t *template) loadTemplateContent(template string) ([]byte, error) {
+	if !file.Exists(template) {
+		return nil, fmt.Errorf("Unable to open the template file '%s'", template)
+	}
+
+	cts, err := ioutil.ReadFile(template)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to read the template file '%s'", c.GetTemplate())
+		return nil, fmt.Errorf("Unable to read the template file '%s'", template)
 	}
 
-	return &template{
-		template: cts,
-		config:   c,
-		files:    files.New(),
-	}, nil
+	return cts, nil
 }
 
 // Parse parses files
@@ -84,10 +110,34 @@ func (t *template) computeContent(img config.Image) ([]byte, error) {
 	vars["arguments"] = img.GetArguments()
 	vars["vars"] = img.GetVars()
 
+	return t.buildImageTemplate(img, vars)
+}
+
+// checkTemplateRef checks based template
+func (t *template) checkTemplateRef(img config.Image) (template string, err error) {
+	template = img.GetTemplate()
+	if img.GetTemplate() == "" {
+		template = config.DefaultTemplateRef
+	}
+
+	if _, ok := t.config.GetTemplates()[template]; !ok {
+		return "", fmt.Errorf("reference \"%s\" doesn't exists", template)
+	}
+
+	return
+}
+
+// buildImageTemplate builds the image template
+func (t *template) buildImageTemplate(img config.Image, vars map[string]interface{}) ([]byte, error) {
+	tplRef, err := t.checkTemplateRef(img)
+	if err != nil {
+		return nil, err
+	}
+
 	outputTpl, err := gotemplate.
 		New("output").
 		Funcs(sprig.GenericFuncMap()).
-		Parse(string(t.template))
+		Parse(string(t.templates[tplRef]))
 	if err != nil {
 		return []byte{}, err
 	}

@@ -39,7 +39,7 @@ func generateRun(cmd *cobra.Command, args []string) {
 
 	// Parse templates
 	if err := t.Parse(); err != nil {
-		printError(fmt.Sprintf("Unable to parse template '%s'", c.GetTemplate()), err)
+		printError(fmt.Sprintf("Unable to parse template: %s", err), err)
 	}
 
 	// Print output

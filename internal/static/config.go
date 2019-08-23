@@ -7,7 +7,8 @@ const ConfigTemplate = `# This is an example of .baleia.yaml.
 
 version: "1"                                                                    # Optional - Version of Beleia file used
 
-template: Dockerfile.tmpl                                                       # Optional - Dockerfile template used
+templates:                                                                      # Optional - Dockerfile templates used
+  default: Dockerfile.tmpl
 maintainers:                                                                    # Optional - List of maintainers
   - Julien BREUX <julien.breux@gmail.com>
 name: go                                                                        # Required - Name of the image
@@ -22,7 +23,8 @@ vars:                                                                           
 
 images:                                                                         # Required - Images generated
   # Go 1.11 / Alpine 3.10
-  - vars:
+  - template: default
+    vars:
       goVersion: 1.11
 
    # Go 1.12 / Alpine 3.10

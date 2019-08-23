@@ -6,6 +6,9 @@ import (
 )
 
 const (
+	// DefaultTemplateRef returns the default template reference
+	DefaultTemplateRef = "default"
+
 	defaultTemplate = "Dockerfile.tmpl"
 )
 
@@ -16,9 +19,9 @@ type config struct {
 
 // schema represents the configuration schema
 type schema struct {
-	Version  string        `yaml:"version,omitempty"`
-	Template string        `yaml:"template,omitempty"`
-	Images   []schemaImage `yaml:"images"`
+	Version   string            `yaml:"version,omitempty"`
+	Images    []schemaImage     `yaml:"images"`
+	Templates map[string]string `yaml:"templates,omitempty"`
 
 	// copy: schemaImage
 	Vars        map[string]string `yaml:"vars,omitempty"`
@@ -39,8 +42,8 @@ func New(f string) (Config, error) {
 	}
 
 	// Default values
-	if s.Template == "" {
-		s.Template = defaultTemplate
+	if len(s.Templates) == 0 {
+		s.Templates[DefaultTemplateRef] = defaultTemplate
 	}
 
 	return config{
@@ -53,9 +56,9 @@ func (c config) GetVersion() string {
 	return c.schema.Version
 }
 
-// GetTemplate returns the template filename
-func (c config) GetTemplate() string {
-	return c.schema.Template
+// GetTemplates returns the templates filenames
+func (c config) GetTemplates() map[string]string {
+	return c.schema.Templates
 }
 
 // LenImages counts the number of images
