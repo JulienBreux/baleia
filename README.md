@@ -5,6 +5,7 @@
 [![codebeat badge](https://codebeat.co/badges/4cb0c1d1-6e1d-4219-aba9-083f18e23e09)](https://codebeat.co/projects/github-com-julienbreux-baleia-master)
 [![GoDoc](https://godoc.org/github.com/JulienBreux/baleia?status.svg)](http://godoc.org/github.com/JulienBreux/baleia)
 [![GitHub tag](https://img.shields.io/github/tag/JulienBreux/baleia.svg)](Tag)
+[![Go version](https://img.shields.io/badge/go-v1.13-blue)](https://golang.org/dl/#stable)
 
 Baleia is a template engine used to manage Docker images templates repositories.
 The project is based on three philosophies *KISS*, *DRY* and *YAGNI*.
