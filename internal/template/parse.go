@@ -82,6 +82,7 @@ func (t *template) buildImageTemplate(img config.Image, vars map[string]interfac
 
 	outputTpl, err := gotemplate.
 		New("output").
+		Option("missingkey=zero").
 		Funcs(sprig.GenericFuncMap()).
 		Parse(string(t.templates[tplRef]))
 	if err != nil {
