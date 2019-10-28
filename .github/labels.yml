@@ -1,0 +1,22 @@
+# Sizes
+- color: ffffff
+  description: Size XXS
+  name: size/XXS
+- color: ffffff
+  description: Size XS
+  name: size/XS
+- color: ffffff
+  description: Size S
+  name: size/S
+- color: ffffff
+  description: Size M
+  name: size/M
+- color: ffffff
+  description: Size L
+  name: size/L
+- color: ffffff
+  description: Size XL
+  name: size/XL
+- color: ffffff
+  description: Size XXL
+  name: size/XXL
